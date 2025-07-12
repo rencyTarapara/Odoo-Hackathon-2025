@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skill Swap Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --accent-color: #FF9800;
+            --danger-color: #f44336;
+            --success-color: #4CAF50;
+            --warning-color: #ff9800;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f5f5f5;
+            --border-color: #ddd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg-light);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            background-color: rgba(255,255,255,0.2);
+        }
+
+        /* Notification Badge */
+        .notification-badge {
+            background: var(--danger-color);
+            color: white;
+            border-radius: 50%;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.7rem;
+            position: absolute;
+            top: -5px;
+            right: -5px;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 2rem 0;
+        }
+
+        /* Dashboard */
+        .dashboard {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .profile-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .profile-photo {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+            border: 4px solid var(--primary-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        /* Forms */
+        .form-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #1976D2;
+        }
+
+        .btn-danger {
+            background-color: var(--danger-color);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #d32f2f;
+        }
+
+        .btn-success {
+            background-color: var(--success-color);
+            color: white;
+        }
+
+        .btn-success:hover {
+            background-color: #45a049;
+        }
+
+        /* Skill Tags */
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .skill-tag {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skill-tag.remove {
+            background-color: var(--danger-color);
+            cursor: pointer;
+        }
+
+        /* Search and Filter */
+        .search-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        /* User Cards */
+        .users-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .user-card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .user-card-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .user-card-body {
+            padding: 1.5rem;
+        }
+
+        .user-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 1rem;
+        }
+
+        /* Swap Requests */
+        .swap-requests {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .request-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            margin-bottom: 1rem;
+        }
+
+        .request-info {
+            flex: 1;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        /* Admin Panel */
+        .admin-panel {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .admin-tabs {
+            display: flex;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .admin-tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .admin-tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: white;
+            margin: 5% auto;
+            padding: 2rem;
+            border-radius: 10px;
+            max-width: 500px;
+            position: relative;
+        }
+
+        .close {
+            position: absolute;
+            right: 1rem;
+            top: 1rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Messaging System */
+        .messages-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .message-list {
+            max-height: 400px;
+            overflow-y: auto;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            padding: 1rem;
+        }
+
+        .message-item {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            margin-bottom: 1rem;
+        }
+
+        .message-item:last-child {
+            border-bottom: none;
+        }
+
+        .message-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .message-sender {
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .message-time {
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        /* Notifications */
+        .notifications-section {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .notification-item {
+            padding: 1rem;
+            border-left: 4px solid var(--primary-color);
+            background: var(--bg-light);
+            margin-bottom: 1rem;
+            border-radius: 5px;
+        }
+
+        .notification-item.unread {
+            border-left-color: var(--danger-color);
+            background: white;
+        }
+
+        /* Skill Categories */
+        .skill-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .category-card:hover {
+            transform: translateY(-2px);
+        }
+
+        .category-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        /* Progress Bars */
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--border-color);
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 0.5rem;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--primary-color);
+            transition: width 0.3s;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .dashboard {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-menu {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .users-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Utility Classes */
+        .text-center { text-align: center; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .d-none { display: none; }
+        .d-flex { display: flex; }
+        .justify-between { justify-content: space-between; }
+        .align-center { align-items: center; }
+        .text-success { color: var(--success-color); }
+        .text-warning { color: var(--warning-color); }
+        .text-danger { color: var(--danger-color); }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-exchange-alt"></i> Skill Swap
+                </div>
+                <nav>
+                    <ul class="nav-menu">
+                        <li><a href="#" onclick="showSection('dashboard')">Dashboard</a></li>
+                        <li><a href="#" onclick="showSection('browse')">Browse Users</a></li>
+                        <li><a href="#" onclick="showSection('requests')">My Requests</a></li>
+                        <li><a href="#" onclick="showSection('messages')">Messages</a></li>
+                        <li><a href="#" onclick="showSection('notifications')">Notifications</a></li>
+                        <li><a href="#" onclick="showSection('profile')">Profile</a></li>
+                        <li><a href="#" onclick="showSection('admin')" id="admin-link" style="display: none;">Admin</a></li>
+                        <li><a href="#" onclick="logout()">Logout</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section">
+                <h2 class="mb-2">Dashboard</h2>
+                <div class="dashboard">
+                    <div class="profile-card">
+                        <img src="https://via.placeholder.com/120" alt="Profile Photo" class="profile-photo" id="profile-photo">
+                        <h3 id="user-name">John Doe</h3>
+                        <p id="user-location">New York, NY</p>
+                        <div class="skill-tags" id="offered-skills">
+                            <!-- Skills will be populated here -->
+                        </div>
+                        <button class="btn btn-primary mt-2" onclick="showSection('profile')">Edit Profile</button>
+                    </div>
+                    
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-number" id="total-swaps">0</div>
+                            <div>Total Swaps</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="pending-requests">0</div>
+                            <div>Pending Requests</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="rating">4.5</div>
+                            <div>Average Rating</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="unread-messages">0</div>
+                            <div>Unread Messages</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="unread-notifications">0</div>
+                            <div>Notifications</div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number" id="skill-level">85%</div>
+                            <div>Skill Level</div>
+                            <div class="progress-bar">
+                                <div class="progress-fill" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="form-container">
+                    <h3>Recent Activity</h3>
+                    <div id="recent-activity">
+                        <!-- Recent activity will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Browse Users Section -->
+            <section id="browse" class="section d-none">
+                <h2 class="mb-2">Browse Users</h2>
+                
+                <!-- Skill Categories -->
+                <div class="skill-categories">
+                    <div class="category-card" onclick="filterByCategory('technology')">
+                        <div class="category-icon"><i class="fas fa-laptop-code"></i></div>
+                        <h4>Technology</h4>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('design')">
+                        <div class="category-icon"><i class="fas fa-palette"></i></div>
+                        <h4>Design</h4>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('language')">
+                        <div class="category-icon"><i class="fas fa-language"></i></div>
+                        <h4>Languages</h4>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('cooking')">
+                        <div class="category-icon"><i class="fas fa-utensils"></i></div>
+                        <h4>Cooking</h4>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('music')">
+                        <div class="category-icon"><i class="fas fa-music"></i></div>
+                        <h4>Music</h4>
+                    </div>
+                    <div class="category-card" onclick="filterByCategory('fitness')">
+                        <div class="category-icon"><i class="fas fa-dumbbell"></i></div>
+                        <h4>Fitness</h4>
+                    </div>
+                </div>
+
+                <div class="search-section">
+                    <form class="search-form" onsubmit="searchUsers(event)">
+                        <div class="form-group">
+                            <label for="search-skill">Search by Skill</label>
+                            <input type="text" id="search-skill" class="form-control" placeholder="e.g., Photoshop, Excel, Cooking">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </form>
+                </div>
+                <div class="users-grid" id="users-grid">
+                    <!-- User cards will be populated here -->
+                </div>
+            </section>
+
+            <!-- Messages Section -->
+            <section id="messages" class="section d-none">
+                <h2 class="mb-2">Messages</h2>
+                <div class="messages-section">
+                    <div class="d-flex justify-between align-center mb-2">
+                        <h3>Conversations</h3>
+                        <button class="btn btn-primary" onclick="openNewMessageModal()">New Message</button>
+                    </div>
+                    <div class="message-list" id="message-list">
+                        <!-- Messages will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notifications Section -->
+            <section id="notifications" class="section d-none">
+                <h2 class="mb-2">Notifications</h2>
+                <div class="notifications-section">
+                    <div class="d-flex justify-between align-center mb-2">
+                        <h3>All Notifications</h3>
+                        <button class="btn btn-secondary" onclick="markAllAsRead()">Mark All as Read</button>
+                    </div>
+                    <div id="notifications-list">
+                        <!-- Notifications will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- My Requests Section -->
+            <section id="requests" class="section d-none">
+                <h2 class="mb-2">My Swap Requests</h2>
+                <div class="swap-requests">
+                    <div id="sent-requests">
+                        <h3>Sent Requests</h3>
+                        <!-- Sent requests will be populated here -->
+                    </div>
+                    <div id="received-requests" class="mt-2">
+                        <h3>Received Requests</h3>
+                        <!-- Received requests will be populated here -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- Profile Section -->
+            <section id="profile" class="section d-none">
+                <h2 class="mb-2">Edit Profile</h2>
+                <div class="form-container">
+                    <form id="profile-form" onsubmit="updateProfile(event)">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="location">Location (Optional)</label>
+                            <input type="text" id="location" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-photo-input">Profile Photo</label>
+                            <input type="file" id="profile-photo-input" class="form-control" accept="image/*">
+                        </div>
+                        <div class="form-group">
+                            <label>Skills Offered</label>
+                            <div class="d-flex">
+                                <input type="text" id="skill-offered" class="form-control" placeholder="Add a skill">
+                                <button type="button" class="btn btn-primary" onclick="addSkill('offered')">Add</button>
+                            </div>
+                            <div class="skill-tags" id="offered-skills-tags"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Skills Wanted</label>
+                            <div class="d-flex">
+                                <input type="text" id="skill-wanted" class="form-control" placeholder="Add a skill">
+                                <button type="button" class="btn btn-primary" onclick="addSkill('wanted')">Add</button>
+                            </div>
+                            <div class="skill-tags" id="wanted-skills-tags"></div>
+                        </div>
+                        <div class="form-group">
+                            <label>Availability</label>
+                            <div>
+                                <label><input type="checkbox" value="weekends"> Weekends</label>
+                                <label><input type="checkbox" value="evenings"> Evenings</label>
+                                <label><input type="checkbox" value="weekdays"> Weekdays</label>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>
+                                <input type="checkbox" id="public-profile"> Make profile public
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update Profile</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Admin Section -->
+            <section id="admin" class="section d-none">
+                <h2 class="mb-2">Admin Panel</h2>
+                <div class="admin-panel">
+                    <div class="admin-tabs">
+                        <div class="admin-tab active" onclick="showAdminTab('users')">Users</div>
+                        <div class="admin-tab" onclick="showAdminTab('swaps')">Swaps</div>
+                        <div class="admin-tab" onclick="showAdminTab('reports')">Reports</div>
+                        <div class="admin-tab" onclick="showAdminTab('messages')">Messages</div>
+                        <div class="admin-tab" onclick="showAdminTab('analytics')">Analytics</div>
+                    </div>
+                    
+                    <div id="admin-users" class="admin-content">
+                        <h3>User Management</h3>
+                        <div id="users-list">
+                            <!-- Users list will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div id="admin-swaps" class="admin-content d-none">
+                        <h3>Swap Management</h3>
+                        <div id="swaps-list">
+                            <!-- Swaps list will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div id="admin-reports" class="admin-content d-none">
+                        <h3>Reports</h3>
+                        <button class="btn btn-primary" onclick="downloadReport('users')">Download User Report</button>
+                        <button class="btn btn-primary" onclick="downloadReport('swaps')">Download Swap Report</button>
+                        <button class="btn btn-primary" onclick="downloadReport('analytics')">Download Analytics Report</button>
+                    </div>
+                    
+                    <div id="admin-messages" class="admin-content d-none">
+                        <h3>Send Platform Message</h3>
+                        <form onsubmit="sendPlatformMessage(event)">
+                            <div class="form-group">
+                                <label for="message-subject">Subject</label>
+                                <input type="text" id="message-subject" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="message-content">Message</label>
+                                <textarea id="message-content" class="form-control" rows="5" required></textarea>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Send Message</button>
+                        </form>
+                    </div>
+
+                    <div id="admin-analytics" class="admin-content d-none">
+                        <h3>Platform Analytics</h3>
+                        <div class="stats-grid">
+                            <div class="stat-card">
+                                <div class="stat-number" id="total-users">0</div>
+                                <div>Total Users</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="total-swaps-admin">0</div>
+                                <div>Total Swaps</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="active-users">0</div>
+                                <div>Active Users</div>
+                            </div>
+                            <div class="stat-card">
+                                <div class="stat-number" id="success-rate">0%</div>
+                                <div>Success Rate</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modals -->
+    <div id="user-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('user-modal')">&times;</span>
+            <h3 id="modal-user-name">User Name</h3>
+            <div id="modal-user-details">
+                <!-- User details will be populated here -->
+            </div>
+            <div class="form-group">
+                <label for="swap-message">Message (Optional)</label>
+                <textarea id="swap-message" class="form-control" rows="3"></textarea>
+            </div>
+            <button class="btn btn-primary" onclick="sendSwapRequest()">Send Swap Request</button>
+        </div>
+    </div>
+
+    <div id="message-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('message-modal')">&times;</span>
+            <h3>New Message</h3>
+            <form onsubmit="sendMessage(event)">
+                <div class="form-group">
+                    <label for="message-recipient">To:</label>
+                    <select id="message-recipient" class="form-control" required>
+                        <option value="">Select a user</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="message-subject-input">Subject:</label>
+                    <input type="text" id="message-subject-input" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="message-body">Message:</label>
+                    <textarea id="message-body" class="form-control" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Message</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="skill-swap-platform.js"></script>
+</body>
+</html> 

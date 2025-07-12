@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Skill Swap Platform</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #4CAF50;
+            --secondary-color: #2196F3;
+            --accent-color: #FF9800;
+            --danger-color: #f44336;
+            --success-color: #4CAF50;
+            --warning-color: #ff9800;
+            --text-dark: #333;
+            --text-light: #666;
+            --bg-light: #f5f5f5;
+            --border-color: #ddd;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .login-container {
+            background: white;
+            padding: 3rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .logo i {
+            margin-right: 0.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #45a049;
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary-color);
+            color: white;
+            margin-top: 1rem;
+        }
+
+        .btn-secondary:hover {
+            background-color: #1976D2;
+        }
+
+        .divider {
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--border-color);
+        }
+
+        .divider span {
+            background: white;
+            padding: 0 1rem;
+            color: var(--text-light);
+        }
+
+        .demo-accounts {
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 5px;
+        }
+
+        .demo-accounts h4 {
+            margin-bottom: 1rem;
+            color: var(--text-dark);
+        }
+
+        .demo-account {
+            display: block;
+            padding: 0.5rem;
+            margin: 0.5rem 0;
+            background: white;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s;
+        }
+
+        .demo-account:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <div class="logo">
+            <i class="fas fa-exchange-alt"></i> Skill Swap
+        </div>
+        <h2>Welcome Back</h2>
+        <p style="color: var(--text-light); margin-bottom: 2rem;">Sign in to your account</p>
+        
+        <form id="login-form" onsubmit="handleLogin(event)">
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <input type="password" id="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Sign In</button>
+        </form>
+        
+        <div class="divider">
+            <span>or</span>
+        </div>
+        
+        <button class="btn btn-secondary" onclick="handleSignup()">Create New Account</button>
+        
+        <div class="demo-accounts">
+            <h4>Demo Accounts</h4>
+            <a href="#" class="demo-account" onclick="loginAsUser('john@example.com', 'password123')">
+                <strong>John Doe</strong> - Regular User
+            </a>
+            <a href="#" class="demo-account" onclick="loginAsUser('jane@example.com', 'password123')">
+                <strong>Jane Smith</strong> - Regular User
+            </a>
+            <a href="#" class="demo-account" onclick="loginAsUser('mike@example.com', 'password123')">
+                <strong>Mike Johnson</strong> - Regular User
+            </a>
+            <a href="#" class="demo-account" onclick="loginAsUser('admin@skillswap.com', 'admin123')">
+                <strong>Admin</strong> - Administrator
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function handleLogin(event) {
+            event.preventDefault();
+            
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            
+            // Simple validation
+            if (!email || !password) {
+                alert('Please fill in all fields');
+                return;
+            }
+            
+            // Check if user exists
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            const user = users.find(u => u.email === email);
+            
+            if (user && user.password === password) {
+                // Store current user
+                localStorage.setItem('currentUser', JSON.stringify(user));
+                window.location.href = 'skill-swap-platform.html';
+            } else {
+                alert('Invalid email or password');
+            }
+        }
+        
+        function handleSignup() {
+            // For demo purposes, create a new user
+            const email = prompt('Enter your email:');
+            if (!email) return;
+            
+            const name = prompt('Enter your name:');
+            if (!name) return;
+            
+            const password = prompt('Enter your password:');
+            if (!password) return;
+            
+            const newUser = {
+                id: Date.now(),
+                name: name,
+                email: email,
+                password: password,
+                location: '',
+                photo: 'https://via.placeholder.com/120',
+                skillsOffered: [],
+                skillsWanted: [],
+                availability: [],
+                isPublic: true,
+                rating: 0,
+                totalSwaps: 0,
+                role: 'user'
+            };
+            
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            users.push(newUser);
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify(newUser));
+            
+            window.location.href = 'skill-swap-platform.html';
+        }
+        
+        function loginAsUser(email, password) {
+            document.getElementById('email').value = email;
+            document.getElementById('password').value = password;
+            handleLogin(new Event('submit'));
+        }
+        
+        // Initialize demo users if they don't exist
+        document.addEventListener('DOMContentLoaded', function() {
+            const users = JSON.parse(localStorage.getItem('users') || '[]');
+            
+            if (users.length === 0) {
+                const demoUsers = [
+                    {
+                        id: 1,
+                        name: 'John Doe',
+                        email: 'john@example.com',
+                        password: 'password123',
+                        location: 'New York, NY',
+                        photo: 'https://via.placeholder.com/120',
+                        skillsOffered: ['JavaScript', 'React', 'Web Development'],
+                        skillsWanted: ['Graphic Design', 'Photography'],
+                        availability: ['weekends', 'evenings'],
+                        isPublic: true,
+                        rating: 4.5,
+                        totalSwaps: 12,
+                        role: 'user'
+                    },
+                    {
+                        id: 2,
+                        name: 'Jane Smith',
+                        email: 'jane@example.com',
+                        password: 'password123',
+                        location: 'Los Angeles, CA',
+                        photo: 'https://via.placeholder.com/120',
+                        skillsOffered: ['Graphic Design', 'Photoshop', 'Illustration'],
+                        skillsWanted: ['Cooking', 'Spanish'],
+                        availability: ['weekends'],
+                        isPublic: true,
+                        rating: 4.8,
+                        totalSwaps: 8,
+                        role: 'user'
+                    },
+                    {
+                        id: 3,
+                        name: 'Mike Johnson',
+                        email: 'mike@example.com',
+                        password: 'password123',
+                        location: 'Chicago, IL',
+                        photo: 'https://via.placeholder.com/120',
+                        skillsOffered: ['Cooking', 'Baking', 'Italian Cuisine'],
+                        skillsWanted: ['Excel', 'Data Analysis'],
+                        availability: ['evenings', 'weekdays'],
+                        isPublic: true,
+                        rating: 4.2,
+                        totalSwaps: 15,
+                        role: 'user'
+                    },
+                    {
+                        id: 4,
+                        name: 'Admin User',
+                        email: 'admin@skillswap.com',
+                        password: 'admin123',
+                        location: 'San Francisco, CA',
+                        photo: 'https://via.placeholder.com/120',
+                        skillsOffered: ['Project Management', 'Leadership'],
+                        skillsWanted: ['Technical Skills'],
+                        availability: ['weekdays'],
+                        isPublic: true,
+                        rating: 5.0,
+                        totalSwaps: 25,
+                        role: 'admin'
+                    }
+                ];
+                
+                localStorage.setItem('users', JSON.stringify(demoUsers));
+            }
+        });
+    </script>
+</body>
+</html>
